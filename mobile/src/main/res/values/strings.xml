@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Muskrat</string>
+    <string name="database_name">database.db</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string-array name="tabs">
+        <item>Audio</item>
+        <item>Video</item>
+        <item>News</item>
+    </string-array>
+
+    <string name="now_playing">Now Playing!</string>
+    <string name="nav_drawer_title">Muskrat Nav Drawer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_number_label">Tab </string>
+    <string name="title_activity_media_chooser">Select Media</string>
+
+    <string name="url_manual_input_title">URL Input</string>
+    <string name="url_entry_instruction">Enter a URL (must be http://)</string>
+    <string name="title_activity_delete_this">DeleteThisActivity</string>
+    <string name="title_activity_delete_me">DeleteMeActivity</string>
+</resources>

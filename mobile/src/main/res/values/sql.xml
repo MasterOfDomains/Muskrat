@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="create_contact_table">
+        CREATE TABLE contact (
+            id INTEGER PRIMARY KEY,
+            nameFirst INTEGER,
+            nameLast TEXT,
+            email TEXT,
+            phone TEXT
+        )
+    </string>
+    <string name="insert_contact">
+        INSERT INTO contact (
+                id,
+                nameFirst,
+                nameLast,
+                email,
+                phone
+        )
+        values (?, ?, ?, ?, ?)
+    </string>
+    <string name="update_contact">
+        UPDATE contact SET
+                nameFirst=?,
+                nameLast=?,
+                email=?,
+                phone=?
+        WHERE id=?
+    </string>
+    <string name="select_all_contacts">SELECT * FROM contact</string>
+    <string name="delete_all_contacts">DELETE FROM contact</string>
+    <string name="delete_contact">DELETE FROM contact WHERE id=?</string>
+    <string name="select_one_contact">SELECT FROM contact WHERE id=?</string>
+
+    <string name="contact_next_key">SELECT MAX(id)+1 AS id FROM contact</string>
+</resources>

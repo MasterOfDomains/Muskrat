@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_drawer_open">Abre cajón de navigatión</string>
+    <string name="navigation_drawer_close">Cerra cajón de navigatión</string>
+
+    <string name="action_settings">Ajustes</string>
+
+    <!--<string-array name="tabs">-->
+        <!--<item>Música</item>-->
+        <!--<item>Vídeo</item>-->
+        <!--<item>Noticias</item>-->
+    <!--</string-array>-->
+
+    <string name="now_playing">Poniendo Ahora</string>
+    <string name="nav_drawer_title">Muskrat Cajón de Navigación</string>
+</resources>

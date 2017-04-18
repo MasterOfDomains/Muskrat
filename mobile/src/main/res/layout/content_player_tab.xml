@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/tab_number_label"
+        android:id="@+id/textPlayerTab"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Player"
+        android:id="@+id/textPlayerTitle"
+        android:layout_centerHorizontal="true" />
+
+    <ViewStub
+        android:id="@+id/playerStub"
+        android:inflatedId="@+id/playerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</merge>

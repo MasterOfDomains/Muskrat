@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jsrwares.muskrat">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".media.background.AudioService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.jsrwares.muskrat.action.TOGGLE_PLAYBACK" />
+                <action android:name="com.jsrwares.muskrat.action.PLAY" />
+                <action android:name="com.jsrwares.muskrat.action.PAUSE" />
+                <action android:name="com.jsrwares.muskrat.action.SKIP" />
+                <action android:name="com.jsrwares.muskrat.action.REWIND" />
+                <action android:name="com.jsrwares.muskrat.action.STOP" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.jsrwares.muskrat.action.URL" />
+
+                <data android:scheme="http" />
+            </intent-filter>
+        </service>
+
+<!--<<<<<<< Updated upstream-->
+        <!--<service android:exported="false" android:name=".services.VideoService">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.jsrwares.muskrat.action.TOGGLE_PLAYBACK" />-->
+                <!--<action android:name="com.jsrwares.muskrat.action.PLAY" />-->
+                <!--<action android:name="com.jsrwares.muskrat.action.PAUSE" />-->
+                <!--<action android:name="com.jsrwares.muskrat.action.SKIP" />-->
+                <!--<action android:name="com.jsrwares.muskrat.action.REWIND" />-->
+                <!--<action android:name="com.jsrwares.muskrat.action.STOP" />-->
+            <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.jsrwares.muskrat.action.URL" />-->
+                <!--<data android:scheme="http" />-->
+            <!--</intent-filter>-->
+        <!--</service>-->
+
+        <!--<receiver android:name=".broadcastreceivers.AudioIntentReceiver">-->
+<!--=======-->
+        <receiver android:name=".media.background.AudioIntentReceiver">
+<!--&gt;>>>>>> Stashed changes-->
+            <intent-filter>
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".media.MediaChooserActivity"
+            android:label="@string/title_activity_media_chooser"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+    </application>
+
+</manifest>
