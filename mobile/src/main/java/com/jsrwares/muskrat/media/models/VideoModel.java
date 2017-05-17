@@ -30,37 +30,37 @@ public class VideoModel extends Model {
     }
 
     public static class Item extends Model.Item {
-        long mmId;
-        String mmArtist;
-        String mmTitle;
-        long mmDuration;
+        long id;
+        String artist;
+        String title;
+        long duration;
 
         public Item(long id, String artist, String title, long duration) {
-            mmId = id;
-            mmArtist = artist;
-            mmTitle = title;
-            mmDuration = duration;
+            this.id = id;
+            this.artist = artist;
+            this.title = title;
+            this.duration = duration;
         }
 
         public long getId() {
-            return mmId;
+            return id;
         }
 
         public String getArtist() {
-            return mmArtist;
+            return artist;
         }
 
         public String getTitle() {
-            return mmTitle;
+            return title;
         }
 
         public long getDuration() {
-            return mmDuration;
+            return duration;
         }
 
         public Uri getURI() {
             return ContentUris.withAppendedId(
-                    android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, mmId);
+                    android.provider.MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id);
         }
     }
 }

@@ -14,24 +14,24 @@ import java.util.List;
 
 public class AudioModel extends Model {
 
-    public Button mPlayButton;
-    public Button mPauseButton;
-    public Button mSkipButton;
-    public Button mRewindButton;
-    public Button mStopButton;
-    public Button mEjectButton;
+    public Button playButton;
+    public Button pauseButton;
+    public Button skipButton;
+    public Button rewindButton;
+    public Button stopButton;
+    public Button ejectButton;
 
     public static final String SUGGESTED_URL = "http://www.vorbis.com/music/Epoq-Lepidoptera.ogg";
     private static final int AUDIO_LAYOUT_RESOURCE = R.layout.fragment_item_audio_list;
 
     public AudioModel(View layout) {
         super(layout);
-        mPlayButton = wireUpButton(R.id.playbutton);
-        mPauseButton = wireUpButton(R.id.pausebutton);
-        mSkipButton = wireUpButton(R.id.skipbutton);
-        mRewindButton = wireUpButton(R.id.rewindbutton);
-        mStopButton = wireUpButton(R.id.stopbutton);
-        mEjectButton = wireUpButton(R.id.ejectbutton);
+        playButton = wireUpButton(R.id.playbutton);
+        pauseButton = wireUpButton(R.id.pausebutton);
+        skipButton = wireUpButton(R.id.skipbutton);
+        rewindButton = wireUpButton(R.id.rewindbutton);
+        stopButton = wireUpButton(R.id.stopbutton);
+        ejectButton = wireUpButton(R.id.ejectbutton);
     }
 
     @Override

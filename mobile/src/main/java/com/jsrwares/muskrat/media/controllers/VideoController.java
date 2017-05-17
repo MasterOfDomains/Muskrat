@@ -21,7 +21,7 @@ import com.jsrwares.muskrat.media.models.VideoModel;
 
 public class VideoController extends Controller {
 
-    private VideoModel mVideoModel;
+    private VideoModel videoModel;
     private static final String POSITION_KEY = "Position";
     private static final int PICK_VIDEO_FILE_REQUEST = 1;
 
@@ -30,28 +30,28 @@ public class VideoController extends Controller {
     private static final int PLAYER_STUB_ID = R.id.playerStub;
     private static final int PLAYER_LAYOUT = R.layout.content_player_video;
 
-    private ViewStub mPlayerStub;
-    private View mPlayerStubContent;
-    private TextView mTabNumberView = null;
-    private VideoView mVideoView;
-    private MediaController mVideoControl;
+    private ViewStub playerStub;
+    private View playerStubContent;
+    private TextView tabNumberView = null;
+    private VideoView videoView;
+    private MediaController videoControl;
 
-    private boolean mTabIsActive = false;
-    private Bundle mTabChangeBundle = null;
-    private int mVideoPosition = 0;
-    private boolean mIsPrepared = false;
-    private boolean mIsPreparing = false;
+    private boolean tabIsActive = false;
+    private Bundle tabChangeBundle = null;
+    private int videoPosition = 0;
+    private boolean isPrepared = false;
+    private boolean isPreparing = false;
 
     public VideoController() {
-        mFunction = MediaFunction.VIDEO;
+        function = MediaFunction.VIDEO;
     }
 
     private class PreparedListener implements MediaPlayer.OnPreparedListener {
 
         @Override
         public void onPrepared(MediaPlayer mp) {
-            mVideoView.seekTo(mVideoPosition);
-            mVideoView.start();
+            videoView.seekTo(videoPosition);
+            videoView.start();
         }
     }
 
@@ -59,54 +59,54 @@ public class VideoController extends Controller {
         if (address == null)
             address = "android.resource://com.jsrwares.muskrat/raw/samplevid";
         Uri vidUri = Uri.parse(address);
-        mVideoView.setVideoURI(vidUri);
+        videoView.setVideoURI(vidUri);
 
-        mVideoView.requestFocus();
-        mVideoView.setOnPreparedListener(new PreparedListener());
+        videoView.requestFocus();
+        videoView.setOnPreparedListener(new PreparedListener());
     }
 
     @Override
     protected void setupMedia(LayoutInflater inflater) {
-        mStub.setLayoutResource(CHILD_LAYOUT);
-        mStubContent = inflater.inflate(CHILD_LAYOUT, (ViewGroup) mParentLayout, true);
-        mTabNumberView = (TextView) mStubContent.findViewById(TAB_NUMBER_VIEW_ID);
-        mTabNumberView.setText(toString());
+        stub.setLayoutResource(CHILD_LAYOUT);
+        stubContent = inflater.inflate(CHILD_LAYOUT, (ViewGroup) parentLayout, true);
+        tabNumberView = (TextView) stubContent.findViewById(TAB_NUMBER_VIEW_ID);
+        tabNumberView.setText(toString());
 
-        mPlayerStub = (ViewStub) mStubContent.findViewById(PLAYER_STUB_ID);
-        mPlayerStub.setLayoutResource(PLAYER_LAYOUT);
-        mPlayerStubContent = inflater.inflate(PLAYER_LAYOUT, (ViewGroup) mParentLayout, true);
-        mVideoView = (VideoView) mPlayerStubContent.findViewById(R.id.videoPlayerView);
-        mVideoControl = new MediaController(mFragment.getContext());
-        mVideoControl.setAnchorView(mVideoView);
+        playerStub = (ViewStub) stubContent.findViewById(PLAYER_STUB_ID);
+        playerStub.setLayoutResource(PLAYER_LAYOUT);
+        playerStubContent = inflater.inflate(PLAYER_LAYOUT, (ViewGroup) parentLayout, true);
+        videoView = (VideoView) playerStubContent.findViewById(R.id.videoPlayerView);
+        videoControl = new MediaController(fragment.getContext());
+        videoControl.setAnchorView(videoView);
     }
 
     public void setAsVisible() {
-        if (!mTabIsActive) {
-            mTabIsActive = true;
+        if (!tabIsActive) {
+            tabIsActive = true;
             prepareVideo(null);
-            if (mTabChangeBundle != null) {
-                restoreInstanceState(mTabChangeBundle);
-                mTabChangeBundle = null;
-                mVideoView.seekTo(mVideoPosition);
+            if (tabChangeBundle != null) {
+                restoreInstanceState(tabChangeBundle);
+                tabChangeBundle = null;
+                videoView.seekTo(videoPosition);
             }
         }
 
-        mTabIsVisible = true;
+        tabIsVisible = true;
     }
 
     @Override
     public void setAsBackground() {
         super.setAsBackground();
         Log.d("Background", "Video to the background...");
-        if (mTabIsActive) {
-            mTabIsActive = false;
-            mVideoView.pause();
-            mTabChangeBundle = new Bundle();
-            saveInstanceState(mTabChangeBundle);
+        if (tabIsActive) {
+            tabIsActive = false;
+            videoView.pause();
+            tabChangeBundle = new Bundle();
+            saveInstanceState(tabChangeBundle);
         }
-        mVideoPosition = mVideoView.getCurrentPosition();
-        mVideoView.setOnPreparedListener(null);
-        mIsPrepared = false;
+        videoPosition = videoView.getCurrentPosition();
+        videoView.setOnPreparedListener(null);
+        isPrepared = false;
     }
 
 //    @Override
@@ -123,7 +123,7 @@ public class VideoController extends Controller {
             if (resultCode == Activity.RESULT_OK) {
                 VideoModel.Item item = data.getParcelableExtra("Item");
                 if (item != null) {
-                    mNowPlaying = item;
+                    nowPlaying = item;
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
 
@@ -133,24 +133,24 @@ public class VideoController extends Controller {
 
     @Override
     public Model getModel() {
-        return mVideoModel;
+        return videoModel;
     }
 
     @Override
     public void chooseMedia() {
-        if (mTabIsVisible)
+        if (tabIsVisible)
             startChooseMediaActivity(PICK_VIDEO_FILE_REQUEST);
     }
 
     public void saveInstanceState(Bundle outState) {
-        int position = mVideoView.getCurrentPosition();
+        int position = videoView.getCurrentPosition();
         if (position != 0)
             outState.putInt(POSITION_KEY, position);
     }
 
     @Override
     public void restoreInstanceState(Bundle savedInstanceState) {
-        mVideoPosition = savedInstanceState.getInt(POSITION_KEY);
+        videoPosition = savedInstanceState.getInt(POSITION_KEY);
     }
 
     @Override

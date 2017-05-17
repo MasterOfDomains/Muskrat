@@ -16,7 +16,7 @@ import com.jsrwares.muskrat.media.controllers.Controller;
 
 public class SlidingTabFragment extends Fragment {
 
-    private Controller mController;
+    private Controller controller;
 
     static final String KEY_TAB_POSITION = "tabposition";
 
@@ -54,7 +54,7 @@ public class SlidingTabFragment extends Fragment {
         if (bundle != null) {
             int tabPosition = bundle.getInt(KEY_TAB_POSITION);
             MediaFunction function = MediaFunction.values()[tabPosition];
-            mController = function.getController();
+            controller = function.getController();
             int parentLayout = R.layout.fragment_sliding_tab;
             int stub = R.id.slidingTabContent;
 
@@ -62,12 +62,12 @@ public class SlidingTabFragment extends Fragment {
             tabSettings.putInt("Parent Layout", parentLayout);
             tabSettings.putInt("Stub ID", stub);
 
-            if (mController != null) {
-                layout = mController.initTab(this, inflater, container, tabSettings);
+            if (controller != null) {
+                layout = controller.initTab(this, inflater, container, tabSettings);
             }
 
             if (savedInstanceState != null) {
-                mController.restoreInstanceState(savedInstanceState);
+                controller.restoreInstanceState(savedInstanceState);
             }
         }
         return layout;
@@ -76,18 +76,18 @@ public class SlidingTabFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mController.processActivityResult(requestCode, resultCode, data);
+        controller.processActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        mController.saveInstanceState(outState);
+        controller.saveInstanceState(outState);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mController.setAsBackground();
+        controller.setAsBackground();
     }
 }

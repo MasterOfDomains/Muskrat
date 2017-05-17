@@ -15,14 +15,14 @@ import java.util.List;
 
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<NewsModel.Item> mValues;
-    private final MediaItemFragment.MediaItemFragmentInterface mListener;
+    private final List<NewsModel.Item> values;
+    private final MediaItemFragment.MediaItemFragmentInterface listener;
 
     @SuppressWarnings("unchecked")
     public NewsRecyclerViewAdapter(List<? extends Model.Item> items,
                                    MediaItemFragment.MediaItemFragmentInterface listener) {
-        mValues = (ArrayList<NewsModel.Item>) items;
-        mListener = listener;
+        values = (ArrayList<NewsModel.Item>) items;
+        this.listener = listener;
     }
 
     @Override

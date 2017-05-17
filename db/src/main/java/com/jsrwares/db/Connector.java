@@ -10,37 +10,37 @@ import java.util.List;
 
 class Connector extends SQLiteOpenHelper {
 
-    SQLiteDatabase mDb = null;
-    private Context mContext;
-    private ConnectorTableDefinitions mTableDefs;
-    private static Connector mConnector = null;
+    SQLiteDatabase db = null;
+    private Context context;
+    private ConnectorTableDefinitions tableDefs;
+    private static Connector connector = null;
 
     private Connector(Context context, String name, ConnectorTableDefinitions tableDefs) {
         super(context, name, null, tableDefs.getVersion());
-        mContext = context;
-        this.mTableDefs = tableDefs;
+        this.context = context;
+        this.tableDefs = tableDefs;
     }
 
     public static Connector getInstance(Context context, String name,
                                         ConnectorTableDefinitions tableDefs) {
-        if (mConnector == null) {
-            mConnector = new Connector(context.getApplicationContext(), name, tableDefs);
+        if (connector == null) {
+            connector = new Connector(context.getApplicationContext(), name, tableDefs);
         }
-        return mConnector;
+        return connector;
     }
 
     @Override
     public synchronized void close() {
         super.close();
-        mDb.close();
+        db.close();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        mDb = db;
+        this.db = db;
         String sql = "";
         List<String> createQuerys;
-        createQuerys = mTableDefs.getCreateQuerys();
+        createQuerys = tableDefs.getCreateQuerys();
 
         for (String createQuery : createQuerys) {
             executeUpdate(createQuery, null);
@@ -50,13 +50,13 @@ class Connector extends SQLiteOpenHelper {
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        mDb = db;
+        this.db = db;
         String sql = "";
         // Drop older table if existed
-        List<String> tables = mTableDefs.getTables();
+        List<String> tables = tableDefs.getTables();
 
         for (String table : tables) {
-            sql = mContext.getString(R.string.drop_statement);
+            sql = context.getString(R.string.drop_statement);
             String arg[] = new String[]{table};
             executeUpdate(sql, arg);
         }
@@ -70,9 +70,9 @@ class Connector extends SQLiteOpenHelper {
         boolean success = true;
         try {
             if (argList == null)
-                mDb.execSQL(sql);
+                db.execSQL(sql);
             else
-                mDb.execSQL(sql, argList);
+                db.execSQL(sql, argList);
         } catch (SQLException e) {
             success = false;
             Utils.writeLog(e, this.toString(), "executeUpdate", sql);

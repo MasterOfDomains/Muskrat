@@ -20,32 +20,32 @@ public class MediaChooserActivity extends AppCompatActivity implements
         PrepareMediaRetrieverTask.MediaRetrieverPreparedListener,
         MediaItemFragment.MediaItemFragmentInterface {
 
-    private Retriever mRetriever;
+    private Retriever retriever;
     public final static String MEDIA_TYPE_KEY = "Media Type";
 
-    private MediaFunction mFunction;
+    private MediaFunction function;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int mediaTypeOrdinal = getIntent().getExtras().getInt(MEDIA_TYPE_KEY);
-        mFunction = MediaFunction.values()[mediaTypeOrdinal];
+        function = MediaFunction.values()[mediaTypeOrdinal];
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        switch (mFunction) {
+        switch (function) {
             case AUDIO:
-                mRetriever = new AudioRetriever(getContentResolver());
+                retriever = new AudioRetriever(getContentResolver());
                 break;
             case VIDEO:
-                mRetriever = new VideoRetriever(getContentResolver());
+                retriever = new VideoRetriever(getContentResolver());
                 break;
             case NEWS:
-                mRetriever = new NewsRetriever(getContentResolver());
+                retriever = new NewsRetriever(getContentResolver());
                 break;
         }
 
-        (new PrepareMediaRetrieverTask(mRetriever, this)).execute();
+        (new PrepareMediaRetrieverTask(retriever, this)).execute();
     }
 
     @Override
@@ -55,12 +55,12 @@ public class MediaChooserActivity extends AppCompatActivity implements
 
     @Override
     public Model getModel() {
-        return mFunction.getController().getModel();
+        return function.getController().getModel();
     }
 
     @Override
     public ArrayList<? extends Model.Item> getItems() {
-        return mRetriever.getItems();
+        return retriever.getItems();
     }
 
     @Override
@@ -68,7 +68,7 @@ public class MediaChooserActivity extends AppCompatActivity implements
         Toast.makeText(this, item.toString(), Toast.LENGTH_LONG).show();
 //        Intent returnIntent = new Intent();
 //        returnIntent.putExtra("Item", item);
-//        returnIntent.putParcelableArrayListExtra("Items", mItems);
+//        returnIntent.putParcelableArrayListExtra("Items", items);
 //        setResult(Activity.RESULT_OK, returnIntent);
     }
 }

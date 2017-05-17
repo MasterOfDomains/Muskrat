@@ -4,11 +4,11 @@ import android.support.annotation.Nullable;
 
 public class Contact {
 
-    private Integer mId = null;
-    private String mFirstName;
-    private String mLastName;
-    private String mEmail;
-    private String mPhone;
+    private Integer id = null;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
 
     public Contact() {
     }
@@ -18,56 +18,56 @@ public class Contact {
                    String lastName,
                    String email,
                    String phone) {
-        mId = id;
-        mFirstName = firstName;
-        mLastName = lastName;
-        mEmail = email;
-        mPhone = phone;
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
     }
 
     @Override
     public String toString() {
-        return mFirstName + " " + mLastName;
+        return firstName + " " + lastName;
     }
 
     public Integer getId() {
-        return mId;
+        return id;
     }
 
     public String getFirstName() {
-        return mFirstName;
+        return firstName;
     }
 
     public String getLastName() {
-        return mLastName;
+        return lastName;
     }
 
     public String getEmail() {
-        return mEmail;
+        return email;
     }
 
     public String getPhone() {
-        return mPhone;
+        return phone;
     }
 
     public void setId(int id) {
-        mId = id;
+        this.id = id;
     }
 
     public void setFirstName(String name) {
-        mFirstName = name;
+        firstName = name;
     }
 
     public void setLastName(String name) {
-        mLastName = name;
+        lastName = name;
     }
 
     public void setEmail(String email) {
-        mEmail = email;
+        this.email = email;
     }
 
     public void setPhone(String phone) {
-        mPhone = phone;
+        this.phone = phone;
     }
 }
 

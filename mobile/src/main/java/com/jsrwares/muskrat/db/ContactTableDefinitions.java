@@ -12,7 +12,7 @@ import java.util.List;
 public class ContactTableDefinitions implements ConnectorTableDefinitions {
 
     private static final int VERSION = 1;
-    private List<Pair<String, String>> mTables = new ArrayList<>();
+    private List<Pair<String, String>> tables = new ArrayList<>();
 
     public ContactTableDefinitions(Context context) {
         String createContactTable = context.getString(R.string.create_contact_table);
@@ -27,18 +27,18 @@ public class ContactTableDefinitions implements ConnectorTableDefinitions {
 
     @Override
     public void addTable(Pair<String, String> table) {
-        mTables.add(table);
+        tables.add(table);
     }
 
     @Override
     public int getTableCount() {
-        return mTables.size();
+        return tables.size();
     }
 
     @Override
     public List<String> getTables() {
         ArrayList<String> tableNames = new ArrayList<>();
-        for (Pair table : mTables)
+        for (Pair table : tables)
             tableNames.add((String) table.first);
         return tableNames;
     }
@@ -46,7 +46,7 @@ public class ContactTableDefinitions implements ConnectorTableDefinitions {
     @Override
     public List<String> getCreateQuerys() {
         ArrayList<String> createStatements = new ArrayList<>();
-        for (Pair table : mTables)
+        for (Pair table : tables)
             createStatements.add((String) table.second);
         return createStatements;
     }

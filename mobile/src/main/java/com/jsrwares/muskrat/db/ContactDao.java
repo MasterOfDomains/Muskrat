@@ -15,24 +15,24 @@ import java.util.List;
 
 public class ContactDao extends Dao<Contact> {
 
-    Context mContext;
+    Context context;
 
     public ContactDao(Context context) {
         super(context, context.getString(R.string.database_name),
                 new ContactTableDefinitions(context));
-        mContext = context;
+        this.context = context;
     }
 
     public Integer getNextKey() {
         Integer nextKey = 0;
-        String sql = mContext.getString(R.string.contact_next_key);
+        String sql = context.getString(R.string.contact_next_key);
         nextKey = getNextKey(sql);
         return nextKey;
     }
 
     public ArrayList<Contact> selectQueryString(String queryString) {
         ArrayList<Contact> contacts;
-        String sql = mContext.getString(R.string.select_all_contacts);
+        String sql = context.getString(R.string.select_all_contacts);
         ArrayList<String> likeColumns = new ArrayList<>();
         likeColumns.add("nameFirst");
         likeColumns.add("nameLast");
@@ -95,7 +95,7 @@ public class ContactDao extends Dao<Contact> {
             contact.setId(nextKey);
         }
 
-        String sql = mContext.getString(R.string.insert_contact);
+        String sql = context.getString(R.string.insert_contact);
         String args[] = new String[5];
         args[0] = contact.getId().toString();
         args[1] = contact.getFirstName();
@@ -108,7 +108,7 @@ public class ContactDao extends Dao<Contact> {
 
     @Override
     public boolean update(Contact contact) {
-        String sql = mContext.getString(R.string.update_contact);
+        String sql = context.getString(R.string.update_contact);
         String args[] = new String[5];
         args[0] = Utils.sqlFormatValue(contact.getFirstName(), true);
         args[1] = Utils.sqlFormatValue(contact.getLastName(), true);
@@ -120,7 +120,7 @@ public class ContactDao extends Dao<Contact> {
 
     @Override
     public void delete(int id) {
-        String sql = mContext.getString(R.string.delete_contact);
+        String sql = context.getString(R.string.delete_contact);
         String arg[] = new String[1];
         arg[0] = Integer.toString(id);
         executeUpdate(sql, arg);
@@ -128,14 +128,14 @@ public class ContactDao extends Dao<Contact> {
 
     @Override
     public void deleteAll() {
-        String sql = mContext.getString(R.string.delete_all_contacts);
+        String sql = context.getString(R.string.delete_all_contacts);
         executeUpdate(sql, null);
     }
 
     @Override
     public Contact select(int id) {
         List<Contact> contacts;
-        String sql = mContext.getString(R.string.select_one_contact);
+        String sql = context.getString(R.string.select_one_contact);
         String arg[] = new String[1];
         arg[0] = Integer.toString(id);
         contacts = executeQuery(sql, arg);
@@ -148,7 +148,7 @@ public class ContactDao extends Dao<Contact> {
     @Override
     public ArrayList<Contact> selectAll() {
         ArrayList<Contact> contacts;
-        String sql = mContext.getString(R.string.select_all_contacts);
+        String sql = context.getString(R.string.select_all_contacts);
 //        String orderby = " ORDER BY contact.nameLast, contact.nameFirst ASC";
 //        sql = sql + orderby;
         ArrayList<String> orderColumns = new ArrayList<>();
@@ -164,7 +164,7 @@ public class ContactDao extends Dao<Contact> {
     @Override
     public int getCount() {
         int counter = 0;
-        String sql = mContext.getString(R.string.select_all_contacts);
+        String sql = context.getString(R.string.select_all_contacts);
         try {
             Cursor cursor = getCurrentDb().rawQuery(sql, null);
             counter = cursor.getCount();

@@ -14,26 +14,26 @@ import com.jsrwares.muskrat.media.models.NewsModel;
 
 public class NewsController extends Controller {
 
-    private NewsModel mNewsModel;
+    private NewsModel newsModel;
     private static final int PICK_NEWS_FILE_REQUEST = 1;
 
     private static final int TAB_NUMBER_VIEW_ID = R.id.textNewsTab;
     private static final int CHILD_LAYOUT = R.layout.content_news_tab;
 
-    private TextView mTabNumberView = null;
+    private TextView tabNumberView = null;
 
     public NewsController() {
-        mFunction = MediaFunction.NEWS;
+        function = MediaFunction.NEWS;
     }
 
     @Override
     protected void setupMedia(LayoutInflater inflater) {
-        mStub.setLayoutResource(CHILD_LAYOUT);
-        mStubContent = inflater.inflate(CHILD_LAYOUT, (ViewGroup) mParentLayout, true);
-        mNewsModel = new NewsModel(mStubContent);
+        stub.setLayoutResource(CHILD_LAYOUT);
+        stubContent = inflater.inflate(CHILD_LAYOUT, (ViewGroup) parentLayout, true);
+        newsModel = new NewsModel(stubContent);
 
-        mTabNumberView = (TextView) mStubContent.findViewById(TAB_NUMBER_VIEW_ID);
-        mTabNumberView.setText(toString());
+        tabNumberView = (TextView) stubContent.findViewById(TAB_NUMBER_VIEW_ID);
+        tabNumberView.setText(toString());
     }
 
     @Override
@@ -58,7 +58,7 @@ public class NewsController extends Controller {
 //
 //=======
     public void setAsVisible() {
-        mTabIsVisible = true;
+        tabIsVisible = true;
 //>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/NewsController.java
     }
 
@@ -69,12 +69,12 @@ public class NewsController extends Controller {
 
     @Override
     public Model getModel() {
-        return mNewsModel;
+        return newsModel;
     }
 
     @Override
     public void chooseMedia() {
-        if (mTabIsVisible)
+        if (tabIsVisible)
             startChooseMediaActivity(PICK_NEWS_FILE_REQUEST);
     }
 

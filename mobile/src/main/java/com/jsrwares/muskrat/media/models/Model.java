@@ -11,11 +11,11 @@ import java.util.List;
 
 public abstract class Model {
 
-    protected View mLayout;
-    protected HashMap<Button, Integer> mViews = new HashMap<>();
+    protected View layout;
+    protected HashMap<Button, Integer> views = new HashMap<>();
 
     protected Model(View layout) {
-        mLayout = layout;
+        this.layout = layout;
     }
 
     public abstract int getListLayoutResource();
@@ -24,13 +24,13 @@ public abstract class Model {
                                                         MediaItemFragment.MediaItemFragmentInterface listener);
 
     protected Button wireUpButton(int resId) {
-        Button button = (Button) mLayout.findViewById(resId);
-        mViews.put(button, resId);
+        Button button = (Button) layout.findViewById(resId);
+        views.put(button, resId);
         return button;
     }
 
     public void addButtonListener(View.OnClickListener listener) {
-        for (View view : mViews.keySet()) {
+        for (View view : views.keySet()) {
             if (view instanceof Button)
                 view.setOnClickListener(listener);
         }

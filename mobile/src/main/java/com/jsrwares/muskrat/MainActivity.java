@@ -21,9 +21,9 @@ import com.jsrwares.muskrat.tabs.SlidingTabLayout;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ViewPager mViewPager;
-    SlidingTabLayout mSlidingTabLayout;
-    SlidingTabFragment mCurrentFragment;
+    ViewPager viewPager;
+    SlidingTabLayout slidingTabLayout;
+    SlidingTabFragment currentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +42,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(new SlidingTabsPagerAdapter(getSupportFragmentManager()));
-        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
-        mSlidingTabLayout.setViewPager(mViewPager);
-        mSlidingTabLayout.setOnPageChangeListener(new Controller.OnPageChangeListenerImpl());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(new SlidingTabsPagerAdapter(getSupportFragmentManager()));
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
+        slidingTabLayout.setViewPager(viewPager);
+        slidingTabLayout.setOnPageChangeListener(new Controller.OnPageChangeListenerImpl());
 
 //        ContactDao dao = new ContactDao(this);
 //        Contact joe = new Contact(null, "Joe", "Rogers", "jsrogers1@gmail.com", "678-592-9139");
@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-            mCurrentFragment = SlidingTabFragment.getInstance(position);
-            return mCurrentFragment;
+            currentFragment = SlidingTabFragment.getInstance(position);
+            return currentFragment;
         }
 
         @Override
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (mCurrentFragment.onKeyDown(keyCode, event))
+        if (currentFragment.onKeyDown(keyCode, event))
             return true;
         else
             return super.onKeyDown(keyCode, event);

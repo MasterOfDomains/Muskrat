@@ -10,24 +10,24 @@ import android.os.AsyncTask;
  */
 
 public class PrepareMediaRetrieverTask extends AsyncTask<Void, Void, Void> {
-    Retriever mRetriever;
-    MediaRetrieverPreparedListener mListener;
+    Retriever retriever;
+    MediaRetrieverPreparedListener listener;
 
     public PrepareMediaRetrieverTask(Retriever retriever,
                                      MediaRetrieverPreparedListener listener) {
-        mRetriever = retriever;
-        mListener = listener;
+        this.retriever = retriever;
+        this.listener = listener;
     }
 
     @Override
     protected Void doInBackground(Void... arg0) {
-        mRetriever.prepare();
+        retriever.prepare();
         return null;
     }
 
     @Override
     protected void onPostExecute(Void result) {
-        mListener.onMediaRetrieverPrepared();
+        listener.onMediaRetrieverPrepared();
     }
 
     public interface MediaRetrieverPreparedListener {

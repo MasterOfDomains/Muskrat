@@ -15,14 +15,14 @@ import java.util.List;
 
 public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecyclerViewAdapter.ViewHolder> {
 
-    private final List<VideoModel.Item> mValues;
-    private final MediaItemFragment.MediaItemFragmentInterface mListener;
+    private final List<VideoModel.Item> values;
+    private final MediaItemFragment.MediaItemFragmentInterface listener;
 
     @SuppressWarnings("unchecked")
     public VideoRecyclerViewAdapter(List<? extends Model.Item> items,
                                     MediaItemFragment.MediaItemFragmentInterface listener) {
-        mValues = (ArrayList<VideoModel.Item>) items;
-        mListener = listener;
+        values = (ArrayList<VideoModel.Item>) items;
+        this.listener = listener;
     }
 
     @Override

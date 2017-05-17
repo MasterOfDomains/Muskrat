@@ -27,8 +27,8 @@ public class MediaItemFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "Column Count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private MediaItemFragmentInterface mListener;
+    private int columnCount = 1;
+    private MediaItemFragmentInterface listener;
 
     private MediaChooserActivity activity;
 
@@ -54,7 +54,7 @@ public class MediaItemFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+            columnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
 
@@ -70,14 +70,14 @@ public class MediaItemFragment extends Fragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
+            if (columnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, columnCount));
             }
-//            recyclerView.setAdapter(new AudioRecyclerViewAdapter(activity.getItems(), mListener));
+//            recyclerView.setAdapter(new AudioRecyclerViewAdapter(activity.getItems(), listener));
             RecyclerView.Adapter adapter = activityInterface.getModel()
-                    .getListAdapter(activityInterface.getItems(), mListener);
+                    .getListAdapter(activityInterface.getItems(), listener);
             recyclerView.setAdapter(adapter);
         }
         return view;
@@ -89,7 +89,7 @@ public class MediaItemFragment extends Fragment {
         super.onAttach(context);
         activity = (MediaChooserActivity) context;
         if (context instanceof MediaItemFragmentInterface) {
-            mListener = (MediaItemFragmentInterface) context;
+            listener = (MediaItemFragmentInterface) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -99,7 +99,7 @@ public class MediaItemFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        listener = null;
     }
 
     /**

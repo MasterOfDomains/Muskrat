@@ -10,33 +10,33 @@ import java.util.ArrayList;
 
 public abstract class Dao<T> {
 
-    private Connector mConnector;
+    private Connector connector;
 
     protected SQLiteDatabase getCurrentDb() {
-        return mConnector.mDb;
+        return connector.db;
     }
 
     protected Dao(Context context, String name, ConnectorTableDefinitions tableDefs) {
-        mConnector = Connector.getInstance(context, name, tableDefs);
+        connector = Connector.getInstance(context, name, tableDefs);
         open();
     }
 
     protected boolean executeUpdate(String sql, @Nullable String[] argList) {
-        return mConnector.executeUpdate(sql, argList);
+        return connector.executeUpdate(sql, argList);
     }
 
     public void open() throws SQLException {
-        mConnector.getWritableDatabase();
+        connector.getWritableDatabase();
     }
 
     public void close() {
-        mConnector.close();
+        connector.close();
     }
 
     public int getNextKey(String sql) {
         int nextKey = 0;
         try {
-            Cursor cursor = mConnector.mDb.rawQuery(sql, null);
+            Cursor cursor = connector.db.rawQuery(sql, null);
             if (cursor != null) {
                 if (cursor.moveToFirst()) {
                     do {

@@ -22,7 +22,7 @@ import com.jsrwares.muskrat.media.models.Model;
 
 public class AudioController extends Controller implements View.OnClickListener {
 
-    private AudioModel mAudioModel;
+    private AudioModel audioModel;
     private static final int PICK_AUDIO_FILE_REQUEST = 1;
 
     private static final int TAB_NUMBER_VIEW_ID = R.id.textPlayerTab;
@@ -30,37 +30,35 @@ public class AudioController extends Controller implements View.OnClickListener 
     private static final int PLAYER_STUB_ID = R.id.playerStub;
     private static final int PLAYER_LAYOUT = R.layout.content_player_audio;
 
-    private ViewStub mPlayerStub;
-    private View mPlayerStubContent;
+    private ViewStub playerStub;
+    private View playerStubContent;
 
-    private Uri nowPlaying = null;
-
-    private TextView mTabNumberView = null;
+    private TextView tabNumberView = null;
 
     public AudioController() {
-        mFunction = MediaFunction.AUDIO;
+        function = MediaFunction.AUDIO;
     }
 
     @Override
     protected void setupMedia(LayoutInflater inflater) {
-        mStub.setLayoutResource(CHILD_LAYOUT);
-        mStubContent = inflater.inflate(CHILD_LAYOUT, (ViewGroup) mParentLayout, true);
-        mTabNumberView = (TextView) mStubContent.findViewById(TAB_NUMBER_VIEW_ID);
-        mTabNumberView.setText(toString());
+        stub.setLayoutResource(CHILD_LAYOUT);
+        stubContent = inflater.inflate(CHILD_LAYOUT, (ViewGroup) parentLayout, true);
+        tabNumberView = (TextView) stubContent.findViewById(TAB_NUMBER_VIEW_ID);
+        tabNumberView.setText(toString());
 
-        mPlayerStub = (ViewStub) mStubContent.findViewById(PLAYER_STUB_ID);
-        mPlayerStub.setLayoutResource(PLAYER_LAYOUT);
-        mPlayerStubContent = inflater.inflate(PLAYER_LAYOUT, (ViewGroup) mParentLayout, true);
-        mAudioModel = new AudioModel(mPlayerStubContent);
-        mAudioModel.addButtonListener(this);
+        playerStub = (ViewStub) stubContent.findViewById(PLAYER_STUB_ID);
+        playerStub.setLayoutResource(PLAYER_LAYOUT);
+        playerStubContent = inflater.inflate(PLAYER_LAYOUT, (ViewGroup) parentLayout, true);
+        audioModel = new AudioModel(playerStubContent);
+        audioModel.addButtonListener(this);
 
-//        Intent pickAudioIntent = new Intent(mFragment.getActivity(), MediaChooserActivity.class);
-//        mFragment.startActivityForResult(pickAudioIntent, PICK_AUDIO_FILE_REQUEST);
+//        Intent pickAudioIntent = new Intent(fragment.getActivity(), MediaChooserActivity.class);
+//        fragment.startActivityForResult(pickAudioIntent, PICK_AUDIO_FILE_REQUEST);
     }
 
     @Override
     public void setAsVisible() {
-        mTabIsVisible = true;
+        tabIsVisible = true;
     }
 
     @Override
@@ -83,7 +81,7 @@ public class AudioController extends Controller implements View.OnClickListener 
             if (resultCode == Activity.RESULT_OK) {
                 AudioModel.Item item = data.getParcelableExtra("Item");
                 if (item != null) {
-                    mNowPlaying = item;
+                    nowPlaying = item;
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
 
@@ -93,12 +91,12 @@ public class AudioController extends Controller implements View.OnClickListener 
 
     @Override
     public Model getModel() {
-        return mAudioModel;
+        return audioModel;
     }
 
     @Override
     public void chooseMedia() {
-        if (mTabIsVisible)
+        if (tabIsVisible)
             startChooseMediaActivity(PICK_AUDIO_FILE_REQUEST);
     }
 
@@ -109,19 +107,19 @@ public class AudioController extends Controller implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (v == mAudioModel.mPlayButton) {
+        if (v == audioModel.playButton) {
             Intent intent = new Intent(AudioService.ACTION_PLAY);
             intent.setPackage(v.getContext().getPackageName());
-            mFragment.getActivity().startService(intent);
-        } else if (v == mAudioModel.mPauseButton)
-            mFragment.getActivity().startService(new Intent(AudioService.ACTION_PAUSE));
-        else if (v == mAudioModel.mSkipButton)
-            mFragment.getActivity().startService(new Intent(AudioService.ACTION_SKIP));
-        else if (v == mAudioModel.mRewindButton)
-            mFragment.getActivity().startService(new Intent(AudioService.ACTION_REWIND));
-        else if (v == mAudioModel.mStopButton)
-            mFragment.getActivity().startService(new Intent(AudioService.ACTION_STOP));
-        else if (v == mAudioModel.mEjectButton) {
+            fragment.getActivity().startService(intent);
+        } else if (v == audioModel.pauseButton)
+            fragment.getActivity().startService(new Intent(AudioService.ACTION_PAUSE));
+        else if (v == audioModel.skipButton)
+            fragment.getActivity().startService(new Intent(AudioService.ACTION_SKIP));
+        else if (v == audioModel.rewindButton)
+            fragment.getActivity().startService(new Intent(AudioService.ACTION_REWIND));
+        else if (v == audioModel.stopButton)
+            fragment.getActivity().startService(new Intent(AudioService.ACTION_STOP));
+        else if (v == audioModel.ejectButton) {
             showUrlDialog();
         }
     }
@@ -133,13 +131,13 @@ public class AudioController extends Controller implements View.OnClickListener 
      */
 
     void showUrlDialog() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(mFragment.getActivity());
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(fragment.getActivity());
         alertBuilder.setTitle(R.string.url_manual_input_title);
         alertBuilder.setMessage(R.string.url_entry_instruction);
-        final EditText input = new EditText(mFragment.getActivity());
+        final EditText input = new EditText(fragment.getActivity());
         alertBuilder.setView(input);
 
-        input.setText(mAudioModel.SUGGESTED_URL);
+        input.setText(audioModel.SUGGESTED_URL);
 
         alertBuilder.setPositiveButton("Play!", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dlg, int whichButton) {
@@ -148,7 +146,7 @@ public class AudioController extends Controller implements View.OnClickListener 
                 Intent i = new Intent(AudioService.ACTION_URL);
                 Uri uri = Uri.parse(input.getText().toString());
                 i.setData(uri);
-                mFragment.getActivity().startService(i);
+                fragment.getActivity().startService(i);
             }
         });
         alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

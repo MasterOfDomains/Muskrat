@@ -24,21 +24,21 @@ public abstract class Controller implements
         MediaItemFragment.MediaItemFragmentInterface,
         PrepareMediaRetrieverTask.MediaRetrieverPreparedListener {
 
-    protected MediaFunction mFunction;
-    protected Fragment mFragment;
-    protected View mParentLayout;
-    protected ViewStub mStub;
-    protected View mStubContent;
+    protected MediaFunction function;
+    protected Fragment fragment;
+    protected View parentLayout;
+    protected ViewStub stub;
+    protected View stubContent;
 
-    private Retriever mRetriever;
-    private boolean mIsInitialized = false;
+    private Retriever retriever;
+    private boolean isInitialized = false;
+
+    protected Model.Item nowPlaying = null;
+    protected boolean tabIsVisible = false;
 
     protected abstract void setupMedia(LayoutInflater inflater);
 
-    protected Model.Item mNowPlaying = null;
-    protected boolean mTabIsVisible = false;
-
-    private static int sCurrentTab = 0;
+    private static int currentTab = 0;
 
     public abstract void saveInstanceState(Bundle outState);
 
@@ -53,17 +53,17 @@ public abstract class Controller implements
 
     @Override
     public void onMediaRetrieverPrepared() {
-        mFragment.getActivity().setContentView(R.layout.activity_media_chooser);
+        fragment.getActivity().setContentView(R.layout.activity_media_chooser);
     }
 
     @Override
     public Model getModel() {
-        return mFunction.getController().getModel();
+        return function.getController().getModel();
     }
 
     @Override
     public ArrayList<? extends Model.Item> getItems() {
-        return mRetriever.getItems();
+        return retriever.getItems();
     }
 
     @Override
@@ -72,49 +72,49 @@ public abstract class Controller implements
 
 //        Intent returnIntent = new Intent();
 //        returnIntent.putExtra("Item", item);
-//        returnIntent.putParcelableArrayListExtra("Items", mItems);
+//        returnIntent.putParcelableArrayListExtra("Items", items);
 //        setResult(Activity.RESULT_OK, returnIntent);
     }
 
     public void setAsBackground() {
-        mIsInitialized = false;
+        isInitialized = false;
     }
 
     protected void startChooseMediaActivity(int requestCode) {
-        Intent intent = new Intent(mFragment.getActivity(), MediaChooserActivity.class);
+        Intent intent = new Intent(fragment.getActivity(), MediaChooserActivity.class);
         Bundle intentBundle = new Bundle();
 //            intentBundle.putInt(MediaChooserActivity.MEDIA_TYPE_KEY, MediaChooserActivity.VIDEO);
-        intentBundle.putInt(MediaChooserActivity.MEDIA_TYPE_KEY, mFunction.ordinal());
+        intentBundle.putInt(MediaChooserActivity.MEDIA_TYPE_KEY, function.ordinal());
         intent.putExtras(intentBundle);
-        mFragment.startActivityForResult(intent, requestCode);
+        fragment.startActivityForResult(intent, requestCode);
     }
 
     public View initTab(Fragment fragment, LayoutInflater inflater, ViewGroup container,
                         Bundle settings) {
 
-        if (!mIsInitialized) {
-            mFragment = fragment;
+        if (!isInitialized) {
+            this.fragment = fragment;
             int parentLayout = settings.getInt("Parent Layout");
-            mParentLayout = inflater.inflate(parentLayout, container, false);
+            this.parentLayout = inflater.inflate(parentLayout, container, false);
             int stubId = settings.getInt("Stub ID");
-            mStub = (ViewStub) mParentLayout.findViewById(stubId);
+            stub = (ViewStub) this.parentLayout.findViewById(stubId);
             setupMedia(inflater);
-            mIsInitialized = true;
-            mFunction = MediaFunction.values()[sCurrentTab];
-//            switch (mFunction) {
+            isInitialized = true;
+            function = MediaFunction.values()[currentTab];
+//            switch (function) {
 //                case AUDIO:
-//                    mRetriever = new AudioRetriever(mFragment.getActivity().getContentResolver());
+//                    retriever = new AudioRetriever(fragment.getActivity().getContentResolver());
 //                    break;
 //                case VIDEO:
-//                    mRetriever = new VideoRetriever(mFragment.getActivity().getContentResolver());
+//                    retriever = new VideoRetriever(fragment.getActivity().getContentResolver());
 //                    break;
 //                case NEWS:
-//                    mRetriever = new NewsRetriever(mFragment.getActivity().getContentResolver());
+//                    retriever = new NewsRetriever(fragment.getActivity().getContentResolver());
 //                    break;
 //            }
-//            (new PrepareMediaRetrieverTask(mRetriever, this)).execute();
+//            (new PrepareMediaRetrieverTask(retriever, this)).execute();
         }
-        return mParentLayout;
+        return parentLayout;
     }
 
     @Override
@@ -127,15 +127,15 @@ public abstract class Controller implements
         @Override
         public void onPageSelected(int position) {
             Log.d("Joe", "Controller.onPageSelected()");
-            Log.d("Joe", "sCurrentTab=" + sCurrentTab);
+            Log.d("Joe", "currentTab=" + currentTab);
             MediaFunction function;
-            if (position != sCurrentTab) {
-                int previousTab = sCurrentTab;
-                sCurrentTab = position;
+            if (position != currentTab) {
+                int previousTab = currentTab;
+                currentTab = position;
                 function = MediaFunction.values()[previousTab];
                 function.getController().setAsBackground();
             }
-            function = MediaFunction.values()[sCurrentTab];
+            function = MediaFunction.values()[currentTab];
             function.getController().setAsVisible();
         }
 

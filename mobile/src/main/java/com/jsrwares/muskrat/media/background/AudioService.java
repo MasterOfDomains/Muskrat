@@ -42,15 +42,15 @@ public class AudioService extends Service implements
 
     final static String TAG = "Audio Service";
 
-    MediaPlayer mPlayer = null;
+    MediaPlayer player = null;
 //    FocusHelper mAudioFocusHelper;
 
     // whether the song we are playing is streaming from the network
-    boolean mIsStreaming = false;
+    boolean isStreaming = false;
 
     // Wifi lock that we hold when streaming files from the internet, in order to prevent the
     // device from shutting off the Wifi radio
-    WifiManager.WifiLock mWifiLock;
+    WifiManager.WifiLock wifiLock;
 
     // The ID we use for the notification (the onscreen alert that appears at the notification
     // area at the top of the screen as an icon -- and as text as well if the user expands the
@@ -59,7 +59,7 @@ public class AudioService extends Service implements
 
     // Our instance of our AudioRetriever, which handles scanning for media and
     // providing titles and URIs as we need.
-    private AudioRetriever mRetriever;
+    private AudioRetriever retriever;
 
     public static final String ACTION_PLAY = "com.jsrwares.muskrat.action.PLAY";
     public static final String ACTION_PAUSE = "com.jsrwares.muskrat.action.PAUSE";
@@ -116,7 +116,7 @@ public class AudioService extends Service implements
         mAudioFocus = canDuck ? AudioFocus.NoFocusCanDuck : AudioFocus.NoFocusNoDuck;
 
         // start/restart/pause media player with new focus settings
-        if (mPlayer != null && mPlayer.isPlaying())
+        if (player != null && player.isPlaying())
             configAndStartMediaPlayer();
     }
 
@@ -208,16 +208,16 @@ public class AudioService extends Service implements
         Log.i(TAG, "debug: Creating service");
 
         // Create the Wifi lock (this does not acquire the lock, this just creates it)
-        mWifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
+        wifiLock = ((WifiManager) getSystemService(Context.WIFI_SERVICE))
                 .createWifiLock(WifiManager.WIFI_MODE_FULL, "mylock");
 
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
         // Create the retriever and start an asynchronous task that will prepare it.
-        mRetriever = new AudioRetriever(getContentResolver());
+        retriever = new AudioRetriever(getContentResolver());
 
-        (new PrepareMediaRetrieverTask(mRetriever, this)).execute();
+        (new PrepareMediaRetrieverTask(retriever, this)).execute();
 
 //        mAudioFocusHelper = new FocusHelper(getApplicationContext(), this);
 
@@ -243,7 +243,7 @@ public class AudioService extends Service implements
      * method starts/restarts the MediaPlayer respecting the current audio focus state. So if
      * we have focus, it will play normally; if we don't have focus, it will either leave the
      * MediaPlayer paused or set it to a low volume, depending on what is allowed by the
-     * current focus settings. This method assumes mPlayer != null, so if you are calling it,
+     * current focus settings. This method assumes player != null, so if you are calling it,
      * you have to do so from a context where you are sure this is the case.
      */
 
@@ -252,14 +252,14 @@ public class AudioService extends Service implements
             // If we don't have audio focus and can't duck, we have to pause, even if mState
             // is State.Playing. But we stay in the Playing state so that we know we have to resume
             // playback once we get the focus back.
-            if (mPlayer.isPlaying()) mPlayer.pause();
+            if (player.isPlaying()) player.pause();
             return;
         } else if (mAudioFocus == AudioFocus.NoFocusCanDuck)
-            mPlayer.setVolume(DUCK_VOLUME, DUCK_VOLUME);  // we'll be relatively quiet
+            player.setVolume(DUCK_VOLUME, DUCK_VOLUME);  // we'll be relatively quiet
         else
-            mPlayer.setVolume(1.0f, 1.0f); // we can be loud
+            player.setVolume(1.0f, 1.0f); // we can be loud
 
-        if (!mPlayer.isPlaying()) mPlayer.start();
+        if (!player.isPlaying()) player.start();
     }
 
     /**
@@ -297,23 +297,23 @@ public class AudioService extends Service implements
      */
 
     void createMediaPlayerIfNeeded() {
-        if (mPlayer == null) {
-            mPlayer = new MediaPlayer();
+        if (player == null) {
+            player = new MediaPlayer();
 
             // Make sure the media player will acquire a wake-lock while playing. If we don't do
             // that, the CPU might go to sleep while the song is playing, causing playback to stop.
             //
             // Remember that to use this, we have to declare the android.permission.WAKE_LOCK
             // permission in AndroidManifest.xml.
-            mPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
+            player.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
 
             // we want the media player to notify us when it's ready preparing, and when it's done
             // playing:
-            mPlayer.setOnPreparedListener(this);
-            mPlayer.setOnCompletionListener(this);
-            mPlayer.setOnErrorListener(this);
+            player.setOnPreparedListener(this);
+            player.setOnCompletionListener(this);
+            player.setOnErrorListener(this);
         } else
-            mPlayer.reset();
+            player.reset();
     }
 
     @Override
@@ -354,15 +354,15 @@ public class AudioService extends Service implements
             if (manualUrl != null) {
                 // set the source of the media player to a manual URL or path
                 createMediaPlayerIfNeeded();
-                mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mPlayer.setDataSource(manualUrl);
-                mIsStreaming = manualUrl.startsWith("http:") || manualUrl.startsWith("https:");
+                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                player.setDataSource(manualUrl);
+                isStreaming = manualUrl.startsWith("http:") || manualUrl.startsWith("https:");
 
                 playingItem = new AudioModel.Item(0, null, manualUrl, null, 0);
             } else {
-                mIsStreaming = false; // playing a locally available song
+                isStreaming = false; // playing a locally available song
 
-                playingItem = (AudioModel.Item) mRetriever.getRandomItem();
+                playingItem = (AudioModel.Item) retriever.getRandomItem();
                 if (playingItem == null) {
                     Toast.makeText(this,
                             "No available music to play. Place some music on your external storage "
@@ -374,8 +374,8 @@ public class AudioService extends Service implements
 
                 // set the source of the media player a a content URI
                 createMediaPlayerIfNeeded();
-                mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mPlayer.setDataSource(getApplicationContext(), playingItem.getURI());
+                player.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                player.setDataSource(getApplicationContext(), playingItem.getURI());
             }
 
             mTrackTitle = playingItem.getTitle();
@@ -388,13 +388,13 @@ public class AudioService extends Service implements
             // the listener to 'this').
             //
             // Until the media player is prepared, we *cannot* call start() on it!
-            mPlayer.prepareAsync();
+            player.prepareAsync();
 
             // If we are streaming from the internet, we want to hold a Wifi lock, which prevents
             // the Wifi radio from going to sleep while the song is playing. If, on the other hand,
             // we are *not* streaming, we want to release the lock if we were holding it before.
-            if (mIsStreaming) mWifiLock.acquire();
-            else if (mWifiLock.isHeld()) mWifiLock.release();
+            if (isStreaming) wifiLock.acquire();
+            else if (wifiLock.isHeld()) wifiLock.release();
         } catch (IOException ex) {
             Log.e("MusicService", "IOException playing next song: " + ex.getMessage());
             ex.printStackTrace();
@@ -469,7 +469,7 @@ public class AudioService extends Service implements
         if (mState == State.Playing) {
             // Pause media player and cancel the 'foreground service' state.
             mState = State.Paused;
-            mPlayer.pause();
+            player.pause();
             relaxResources(false); // while paused, we always retain the MediaPlayer
             // do not give up audio focus
         }
@@ -477,7 +477,7 @@ public class AudioService extends Service implements
 
     void processRewindRequest() {
         if (mState == State.Playing || mState == State.Paused)
-            mPlayer.seekTo(0);
+            player.seekTo(0);
     }
 
     void processSkipRequest() {
@@ -509,14 +509,14 @@ public class AudioService extends Service implements
         stopForeground(true);
 
         // stop and release the Media Player, if it's available
-        if (releaseMediaPlayer && mPlayer != null) {
-            mPlayer.reset();
-            mPlayer.release();
-            mPlayer = null;
+        if (releaseMediaPlayer && player != null) {
+            player.reset();
+            player.release();
+            player = null;
         }
 
         // we can also release the Wifi lock, if we're holding it
-        if (mWifiLock.isHeld()) mWifiLock.release();
+        if (wifiLock.isHeld()) wifiLock.release();
     }
 
     void processAddRequest(Intent intent) {

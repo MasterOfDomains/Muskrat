@@ -13,11 +13,11 @@ public abstract class Retriever {
 
     final String TAG = "Retriever";
 
-    protected ContentResolver mContentResolver;
-    protected Cursor mCursor;
+    protected ContentResolver contentResolver;
+    protected Cursor cursor;
 
     // the items (tracks) we have queried
-    protected List<Model.Item> mItems = new ArrayList<Model.Item>();
+    protected List<Model.Item> items = new ArrayList<Model.Item>();
 
     /**
      * Loads music data. This method may take long, so be sure to call it asynchronously without
@@ -25,28 +25,28 @@ public abstract class Retriever {
      */
     public abstract void prepare();
 
-    private Random mRandom = new Random();
+    private Random random = new Random();
 
     public Retriever(ContentResolver cr) {
-        mContentResolver = cr;
+        contentResolver = cr;
     }
 
     public ContentResolver getContentResolver() {
-        return mContentResolver;
+        return contentResolver;
     }
 
     /**
      * Returns all Items
      */
     public ArrayList<Model.Item> getItems() {
-        return (ArrayList) mItems;
+        return (ArrayList) items;
     }
 
     /**
      * Returns a random Item. If there are no items available, returns null.
      */
     public Model.Item getRandomItem() {
-        if (mItems.size() <= 0) return null;
-        return mItems.get(mRandom.nextInt(mItems.size()));
+        if (items.size() <= 0) return null;
+        return items.get(random.nextInt(items.size()));
     }
 }
