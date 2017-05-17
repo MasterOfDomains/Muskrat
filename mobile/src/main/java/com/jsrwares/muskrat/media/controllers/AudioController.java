@@ -115,8 +115,11 @@ public class AudioController extends Controller implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        if (v == mAudioModel.mPlayButton)
-            mFragment.getActivity().startService(new Intent(AudioService.ACTION_PLAY));
+        if (v == mAudioModel.mPlayButton) {
+            Intent intent = new Intent(AudioService.ACTION_PLAY);
+            intent.setPackage(v.getContext().getPackageName());
+            mFragment.getActivity().startService(intent);
+        }
         else if (v == mAudioModel.mPauseButton)
             mFragment.getActivity().startService(new Intent(AudioService.ACTION_PAUSE));
         else if (v == mAudioModel.mSkipButton)

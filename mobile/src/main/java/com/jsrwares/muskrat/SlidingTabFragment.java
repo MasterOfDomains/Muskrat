@@ -65,7 +65,9 @@ public class SlidingTabFragment extends Fragment {
             tabSettings.putInt("Parent Layout", parentLayout);
             tabSettings.putInt("Stub ID", stub);
 
-            layout = mController.initTab(this, inflater, container, tabSettings);
+            if (mController != null) {
+                layout = mController.initTab(this, inflater, container, tabSettings);
+            }
 
             if (savedInstanceState != null) {
                 mController.restoreInstanceState(savedInstanceState);
