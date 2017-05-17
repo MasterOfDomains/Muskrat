@@ -3,13 +3,16 @@ package com.jsrwares.muskrat.media;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.jsrwares.muskrat.R;
 import com.jsrwares.muskrat.media.list.MediaItemFragment;
-import com.jsrwares.muskrat.media.retrievers.*;
 import com.jsrwares.muskrat.media.models.Model;
+import com.jsrwares.muskrat.media.retrievers.AudioRetriever;
+import com.jsrwares.muskrat.media.retrievers.NewsRetriever;
+import com.jsrwares.muskrat.media.retrievers.PrepareMediaRetrieverTask;
+import com.jsrwares.muskrat.media.retrievers.Retriever;
+import com.jsrwares.muskrat.media.retrievers.VideoRetriever;
 
 import java.util.ArrayList;
 
@@ -18,7 +21,6 @@ public class MediaChooserActivity extends AppCompatActivity implements
         MediaItemFragment.MediaItemFragmentInterface {
 
     private Retriever mRetriever;
-//    private ArrayList<Model.Item> mItems;
     public final static String MEDIA_TYPE_KEY = "Media Type";
 
     private MediaFunction mFunction;

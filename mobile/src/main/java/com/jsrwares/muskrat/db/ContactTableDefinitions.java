@@ -39,7 +39,7 @@ public class ContactTableDefinitions implements ConnectorTableDefinitions {
     public List<String> getTables() {
         ArrayList<String> tableNames = new ArrayList<>();
         for (Pair table : mTables)
-            tableNames.add((String)table.first);
+            tableNames.add((String) table.first);
         return tableNames;
     }
 
@@ -47,7 +47,7 @@ public class ContactTableDefinitions implements ConnectorTableDefinitions {
     public List<String> getCreateQuerys() {
         ArrayList<String> createStatements = new ArrayList<>();
         for (Pair table : mTables)
-            createStatements.add((String)table.second);
+            createStatements.add((String) table.second);
         return createStatements;
     }
 }

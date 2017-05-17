@@ -9,18 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.Toast;
 
 import com.jsrwares.muskrat.R;
 import com.jsrwares.muskrat.media.MediaChooserActivity;
 import com.jsrwares.muskrat.media.MediaFunction;
 import com.jsrwares.muskrat.media.list.MediaItemFragment;
 import com.jsrwares.muskrat.media.models.Model;
-import com.jsrwares.muskrat.media.retrievers.AudioRetriever;
-import com.jsrwares.muskrat.media.retrievers.NewsRetriever;
 import com.jsrwares.muskrat.media.retrievers.PrepareMediaRetrieverTask;
 import com.jsrwares.muskrat.media.retrievers.Retriever;
-import com.jsrwares.muskrat.media.retrievers.VideoRetriever;
 
 import java.util.ArrayList;
 
@@ -45,10 +41,14 @@ public abstract class Controller implements
     private static int sCurrentTab = 0;
 
     public abstract void saveInstanceState(Bundle outState);
+
     public abstract void restoreInstanceState(Bundle savedInstanceState);
+
     public abstract void setAsVisible();
+
     public abstract void processActivityResult(int requestCode, int resultCode, Intent data);
-//    public abstract Model getModel();
+
+    //    public abstract Model getModel();
     public abstract void chooseMedia();
 
     @Override

@@ -2,7 +2,6 @@ package com.jsrwares.muskrat.media.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -10,11 +9,8 @@ import android.widget.TextView;
 
 import com.jsrwares.muskrat.R;
 import com.jsrwares.muskrat.media.MediaFunction;
-import com.jsrwares.muskrat.media.list.MediaItemFragment;
 import com.jsrwares.muskrat.media.models.Model;
 import com.jsrwares.muskrat.media.models.NewsModel;
-
-import java.util.List;
 
 public class NewsController extends Controller {
 

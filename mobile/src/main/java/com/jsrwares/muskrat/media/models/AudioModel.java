@@ -2,12 +2,7 @@ package com.jsrwares.muskrat.media.models;
 
 import android.content.ContentUris;
 import android.net.Uri;
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediamodels/AudioModel.java
-//=======
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/models/AudioModel.java
 import android.view.View;
 import android.widget.Button;
 
@@ -27,7 +22,6 @@ public class AudioModel extends Model {
     public Button mEjectButton;
 
     public static final String SUGGESTED_URL = "http://www.vorbis.com/music/Epoq-Lepidoptera.ogg";
-    //    private static final int AUDIO_LAYOUT_RESOURCE = R.layout.fragment_item_audio;
     private static final int AUDIO_LAYOUT_RESOURCE = R.layout.fragment_item_audio_list;
 
     public AudioModel(View layout) {
@@ -38,13 +32,6 @@ public class AudioModel extends Model {
         mRewindButton = wireUpButton(R.id.rewindbutton);
         mStopButton = wireUpButton(R.id.stopbutton);
         mEjectButton = wireUpButton(R.id.ejectbutton);
-
-//        buttons[0] = mPlayButton;
-//        buttons[1] = mPauseButton;
-//        buttons[2] = mSkipButton;
-//        buttons[3] = mRewindButton;
-//        buttons[4] = mStopButton;
-//        buttons[5] = mEjectButton;
     }
 
     @Override
@@ -101,7 +88,6 @@ public class AudioModel extends Model {
         @Override
         public String toString() {
             return mmTitle + " by " + mmArtist;
-
         }
     }
 }

@@ -8,6 +8,7 @@ public interface ConnectorTableDefinitions {
 
     /**
      * Database version
+     *
      * @return The current Version of the database
      */
 
@@ -15,6 +16,7 @@ public interface ConnectorTableDefinitions {
 
     /**
      * Adds a table to the Definitions
+     *
      * @param table First: table name, Second: SQL create statement
      */
 
@@ -22,6 +24,7 @@ public interface ConnectorTableDefinitions {
 
     /**
      * Get the number of tables defined in this Connection
+     *
      * @return The number of tables.
      */
 
@@ -29,6 +32,7 @@ public interface ConnectorTableDefinitions {
 
     /**
      * Get the names of all tables defined in this connection
+     *
      * @return A List of Strings of all table names
      */
 
@@ -36,6 +40,7 @@ public interface ConnectorTableDefinitions {
 
     /**
      * Get the SQL create statements used to create all tables defined in this connection
+     *
      * @return A List of Strings of all SQL create statements
      */
 

@@ -9,9 +9,6 @@ import com.jsrwares.muskrat.media.list.adapters.NewsRecyclerViewAdapter;
 
 import java.util.List;
 
-/**
- * Created by Joe on 5/26/2016.
- */
 public class NewsModel extends Model {
 
     private static final int NEWS_LAYOUT_RESOURCE = R.layout.fragment_item_news;

@@ -1,9 +1,5 @@
 package com.jsrwares.muskrat.media.background;
 
-/**
- * Created by Joe on 5/9/2016.
- */
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

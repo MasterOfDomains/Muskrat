@@ -10,17 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jsrwares.muskrat.media.controllers.Controller;
 import com.jsrwares.muskrat.media.MediaFunction;
 import com.jsrwares.muskrat.media.background.AudioService;
+import com.jsrwares.muskrat.media.controllers.Controller;
 
 public class SlidingTabFragment extends Fragment {
 
     private Controller mController;
 
     static final String KEY_TAB_POSITION = "tabposition";
-
-    private Context mContext;
 
     public static SlidingTabFragment getInstance(int position) {
         SlidingTabFragment myFragment = new SlidingTabFragment();
@@ -43,7 +41,6 @@ public class SlidingTabFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        mContext = context;
     }
 
     @Nullable
@@ -72,7 +69,7 @@ public class SlidingTabFragment extends Fragment {
             if (savedInstanceState != null) {
                 mController.restoreInstanceState(savedInstanceState);
             }
-       }
+        }
         return layout;
     }
 

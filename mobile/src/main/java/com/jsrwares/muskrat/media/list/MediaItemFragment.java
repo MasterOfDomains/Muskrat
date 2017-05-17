@@ -6,12 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jsrwares.muskrat.R;
 import com.jsrwares.muskrat.media.MediaChooserActivity;
 import com.jsrwares.muskrat.media.models.Model;
 
@@ -123,7 +121,9 @@ public class MediaItemFragment extends Fragment {
      */
     public interface MediaItemFragmentInterface {
         Model getModel();
+
         ArrayList<? extends Model.Item> getItems();
+
         void onListFragmentInteraction(Model.Item item);
     }
 }

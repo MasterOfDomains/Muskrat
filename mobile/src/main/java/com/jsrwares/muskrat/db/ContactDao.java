@@ -5,7 +5,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.support.annotation.Nullable;
 
-import com.jsrwares.db.*;
+import com.jsrwares.db.Dao;
+import com.jsrwares.db.Utils;
 import com.jsrwares.muskrat.R;
 import com.jsrwares.muskrat.contacts.Contact;
 

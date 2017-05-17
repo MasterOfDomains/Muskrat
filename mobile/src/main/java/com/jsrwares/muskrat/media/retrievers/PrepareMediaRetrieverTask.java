@@ -2,8 +2,6 @@ package com.jsrwares.muskrat.media.retrievers;
 
 import android.os.AsyncTask;
 
-import com.jsrwares.muskrat.media.retrievers.Retriever;
-
 /**
  * Asynchronous task that prepares a MusicRetriever. This asynchronous task essentially calls
  * {@link Retriever} on a

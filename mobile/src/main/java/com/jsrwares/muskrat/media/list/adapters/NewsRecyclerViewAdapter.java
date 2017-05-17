@@ -7,16 +7,12 @@ import android.widget.TextView;
 
 import com.jsrwares.muskrat.R;
 import com.jsrwares.muskrat.media.list.MediaItemFragment;
-import com.jsrwares.muskrat.media.models.NewsModel;
 import com.jsrwares.muskrat.media.models.Model;
-import com.jsrwares.muskrat.media.models.VideoModel;
+import com.jsrwares.muskrat.media.models.NewsModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Joe on 5/26/2016.
- */
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.ViewHolder> {
 
     private final List<NewsModel.Item> mValues;
@@ -24,7 +20,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     @SuppressWarnings("unchecked")
     public NewsRecyclerViewAdapter(List<? extends Model.Item> items,
-                                    MediaItemFragment.MediaItemFragmentInterface listener) {
+                                   MediaItemFragment.MediaItemFragmentInterface listener) {
         mValues = (ArrayList<NewsModel.Item>) items;
         mListener = listener;
     }

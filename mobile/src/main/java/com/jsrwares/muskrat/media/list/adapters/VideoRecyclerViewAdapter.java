@@ -13,9 +13,6 @@ import com.jsrwares.muskrat.media.models.VideoModel;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Joe on 5/26/2016.
- */
 public class VideoRecyclerViewAdapter extends RecyclerView.Adapter<VideoRecyclerViewAdapter.ViewHolder> {
 
     private final List<VideoModel.Item> mValues;

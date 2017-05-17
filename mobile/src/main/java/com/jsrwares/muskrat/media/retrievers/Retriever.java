@@ -35,12 +35,16 @@ public abstract class Retriever {
         return mContentResolver;
     }
 
-    /** Returns all Items */
+    /**
+     * Returns all Items
+     */
     public ArrayList<Model.Item> getItems() {
         return (ArrayList) mItems;
     }
 
-    /** Returns a random Item. If there are no items available, returns null. */
+    /**
+     * Returns a random Item. If there are no items available, returns null.
+     */
     public Model.Item getRandomItem() {
         if (mItems.size() <= 0) return null;
         return mItems.get(mRandom.nextInt(mItems.size()));

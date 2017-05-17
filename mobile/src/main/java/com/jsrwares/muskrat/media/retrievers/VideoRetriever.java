@@ -5,16 +5,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/retrievers/VideoRetriever.java
-//import com.jsrwares.muskrat.mediamodels.AudioModel;
-//import com.jsrwares.muskrat.mediamodels.VideoModel;
-//=======
 import com.jsrwares.muskrat.media.models.VideoModel;
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/retrievers/VideoRetriever.java
 
-/**
- * Created by Joe on 5/16/2016.
- */
 public class VideoRetriever extends Retriever {
 
     public VideoRetriever(ContentResolver cr) {

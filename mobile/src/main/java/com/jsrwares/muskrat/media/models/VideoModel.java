@@ -2,15 +2,6 @@ package com.jsrwares.muskrat.media.models;
 
 import android.content.ContentUris;
 import android.net.Uri;
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediamodels/VideoModel.java
-//import android.view.View;
-//
-///**
-// * Created by Joe on 5/16/2016.
-// */
-//=======
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -20,7 +11,6 @@ import com.jsrwares.muskrat.media.list.adapters.VideoRecyclerViewAdapter;
 
 import java.util.List;
 
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/models/VideoModel.java
 public class VideoModel extends Model {
 
     private static final int VIDEO_LAYOUT_RESOURCE = R.layout.fragment_item_video;

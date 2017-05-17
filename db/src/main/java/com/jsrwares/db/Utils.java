@@ -10,7 +10,7 @@ public class Utils {
     // TODO Test all of these
 
     public static void writeLog(Exception e, String className,
-                         String methodName, String sql) {
+                                String methodName, String sql) {
         String message = "Class : " + className +
                 " Method : " + methodName +
                 " Query : " + sql +

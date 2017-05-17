@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jsrwares.muskrat.R;
-import com.jsrwares.muskrat.media.list.MediaItemFragment;
-import com.jsrwares.muskrat.media.list.adapters.AudioRecyclerViewAdapter;
-import com.jsrwares.muskrat.media.models.AudioModel;
-import com.jsrwares.muskrat.media.background.AudioService;
 import com.jsrwares.muskrat.media.MediaFunction;
+import com.jsrwares.muskrat.media.background.AudioService;
+import com.jsrwares.muskrat.media.models.AudioModel;
 import com.jsrwares.muskrat.media.models.Model;
-import com.jsrwares.muskrat.media.models.VideoModel;
-
-import java.util.List;
 
 public class AudioController extends Controller implements View.OnClickListener {
 
@@ -76,10 +70,12 @@ public class AudioController extends Controller implements View.OnClickListener 
     }
 
     @Override
-    public void saveInstanceState(Bundle outState) {}
+    public void saveInstanceState(Bundle outState) {
+    }
 
     @Override
-    public void restoreInstanceState(Bundle savedInstanceState) {}
+    public void restoreInstanceState(Bundle savedInstanceState) {
+    }
 
     @Override
     public void processActivityResult(int requestCode, int resultCode, Intent data) {
@@ -87,11 +83,9 @@ public class AudioController extends Controller implements View.OnClickListener 
             if (resultCode == Activity.RESULT_OK) {
                 AudioModel.Item item = data.getParcelableExtra("Item");
                 if (item != null) {
-//                    Toast.makeText(mFragment.getContext(), item.toString(), Toast.LENGTH_LONG).show();
                     mNowPlaying = item;
                 }
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
+            } else if (resultCode == Activity.RESULT_CANCELED) {
 
             }
         }
@@ -119,8 +113,7 @@ public class AudioController extends Controller implements View.OnClickListener 
             Intent intent = new Intent(AudioService.ACTION_PLAY);
             intent.setPackage(v.getContext().getPackageName());
             mFragment.getActivity().startService(intent);
-        }
-        else if (v == mAudioModel.mPauseButton)
+        } else if (v == mAudioModel.mPauseButton)
             mFragment.getActivity().startService(new Intent(AudioService.ACTION_PAUSE));
         else if (v == mAudioModel.mSkipButton)
             mFragment.getActivity().startService(new Intent(AudioService.ACTION_SKIP));
@@ -159,7 +152,8 @@ public class AudioController extends Controller implements View.OnClickListener 
             }
         });
         alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dlg, int whichButton) {}
+            public void onClick(DialogInterface dlg, int whichButton) {
+            }
         });
 
         alertBuilder.show();

@@ -19,19 +19,19 @@ import android.widget.Toast;
 
 import com.jsrwares.muskrat.MainActivity;
 import com.jsrwares.muskrat.R;
+import com.jsrwares.muskrat.media.models.AudioModel;
+import com.jsrwares.muskrat.media.retrievers.AudioRetriever;
+import com.jsrwares.muskrat.media.retrievers.PrepareMediaRetrieverTask;
+
+import java.io.IOException;
+
 //<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/services/AudioService.java
 //import com.jsrwares.muskrat.asynctasks.PrepareMediaRetrieverTask;
 //import com.jsrwares.muskrat.broadcastreceivers.AudioIntentReceiver;
 //import com.jsrwares.muskrat.mediacontrollers.retrievers.AudioRetriever;
 //import com.jsrwares.muskrat.mediamodels.AudioModel;
 //=======
-import com.jsrwares.muskrat.media.retrievers.PrepareMediaRetrieverTask;
-import com.jsrwares.muskrat.media.retrievers.AudioRetriever;
-import com.jsrwares.muskrat.media.retrievers.Retriever;
-import com.jsrwares.muskrat.media.models.AudioModel;
 //>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/background/AudioService.java
-
-import java.io.IOException;
 
 public class AudioService extends Service implements
         MediaPlayer.OnPreparedListener,
@@ -91,7 +91,9 @@ public class AudioService extends Service implements
         }
     }
 
-    /** Signals that audio focus was gained. */
+    /**
+     * Signals that audio focus was gained.
+     */
     public void onGainedAudioFocus() {
         Toast.makeText(getApplicationContext(), "gained audio focus.", Toast.LENGTH_SHORT).show();
         mAudioFocus = AudioFocus.Focused;
@@ -105,7 +107,7 @@ public class AudioService extends Service implements
      * Signals that audio focus was lost.
      *
      * @param canDuck If true, audio can continue in "ducked" mode (low volume). Otherwise, all
-     * audio must stop.
+     *                audio must stop.
      */
 
     public void onLostAudioFocus(boolean canDuck) {
@@ -118,14 +120,18 @@ public class AudioService extends Service implements
             configAndStartMediaPlayer();
     }
 
-    /** Requests audio focus. Returns whether request was successful or not. */
+    /**
+     * Requests audio focus. Returns whether request was successful or not.
+     */
     public boolean requestFocus() {
         return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
                 mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC,
                         AudioManager.AUDIOFOCUS_GAIN);
     }
 
-    /** Abandons audio focus. Returns whether request was successful or not. */
+    /**
+     * Abandons audio focus. Returns whether request was successful or not.
+     */
     public boolean abandonFocus() {
         return AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager.abandonAudioFocus(this);
     }
@@ -156,6 +162,7 @@ public class AudioService extends Service implements
         NoFocusCanDuck,   // we don't have focus, but can play at a low volume ("ducking")
         Focused           // we have full audio focus
     }
+
     AudioFocus mAudioFocus = AudioFocus.NoFocusNoDuck;
 
 
@@ -187,7 +194,9 @@ public class AudioService extends Service implements
         }
     }
 
-    /** Called when media player is done playing current track. */
+    /**
+     * Called when media player is done playing current track.
+     */
     @Override
     public void onCompletion(MediaPlayer mp) {
         // The media player finished playing the current track, so we go ahead and start the next.
@@ -218,7 +227,9 @@ public class AudioService extends Service implements
     }
 
 
-    /** Called when media player is done preparing. */
+    /**
+     * Called when media player is done preparing.
+     */
     @Override
     public void onPrepared(MediaPlayer mp) {
         // The media player is done preparing. That means we can start playing!
@@ -243,8 +254,7 @@ public class AudioService extends Service implements
             // playback once we get the focus back.
             if (mPlayer.isPlaying()) mPlayer.pause();
             return;
-        }
-        else if (mAudioFocus == AudioFocus.NoFocusCanDuck)
+        } else if (mAudioFocus == AudioFocus.NoFocusCanDuck)
             mPlayer.setVolume(DUCK_VOLUME, DUCK_VOLUME);  // we'll be relatively quiet
         else
             mPlayer.setVolume(1.0f, 1.0f); // we can be loud
@@ -269,7 +279,9 @@ public class AudioService extends Service implements
         return true; // true indicates we handled the error
     }
 
-    /** Updates the notification. */
+    /**
+     * Updates the notification.
+     */
     void updateNotification(String text) {
         PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), MainActivity.class),
@@ -300,8 +312,7 @@ public class AudioService extends Service implements
             mPlayer.setOnPreparedListener(this);
             mPlayer.setOnCompletionListener(this);
             mPlayer.setOnErrorListener(this);
-        }
-        else
+        } else
             mPlayer.reset();
     }
 
@@ -348,8 +359,7 @@ public class AudioService extends Service implements
                 mIsStreaming = manualUrl.startsWith("http:") || manualUrl.startsWith("https:");
 
                 playingItem = new AudioModel.Item(0, null, manualUrl, null, 0);
-            }
-            else {
+            } else {
                 mIsStreaming = false; // playing a locally available song
 
                 playingItem = (AudioModel.Item) mRetriever.getRandomItem();
@@ -385,8 +395,7 @@ public class AudioService extends Service implements
             // we are *not* streaming, we want to release the lock if we were holding it before.
             if (mIsStreaming) mWifiLock.acquire();
             else if (mWifiLock.isHeld()) mWifiLock.release();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Log.e("MusicService", "IOException playing next song: " + ex.getMessage());
             ex.printStackTrace();
         }
@@ -441,8 +450,7 @@ public class AudioService extends Service implements
         if (mState == State.Stopped) {
             // If we're stopped, just go ahead to the next song and start playing
             playNextTrack(null);
-        }
-        else if (mState == State.Paused) {
+        } else if (mState == State.Paused) {
             // If we're paused, just continue playback and restore the 'foreground service' state.
             mState = State.Playing;
             setUpAsForeground(mTrackTitle + " (playing)");
@@ -519,8 +527,7 @@ public class AudioService extends Service implements
             // we'll play the requested URL right after we finish retrieving
             mWhatToPlayAfterRetrieve = intent.getData();
             mStartPlayingAfterRetrieve = true;
-        }
-        else if (mState == State.Playing || mState == State.Paused || mState == State.Stopped) {
+        } else if (mState == State.Playing || mState == State.Paused || mState == State.Stopped) {
             Log.i(TAG, "Playing from URL/path: " + intent.getData().toString());
             tryToGetAudioFocus();
             playNextTrack(intent.getData().toString());

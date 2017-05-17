@@ -72,8 +72,6 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         public Fragment getItem(int position) {
-//            SlidingTabFragment fragment = SlidingTabFragment.getInstance(position);
-//            return fragment;
             mCurrentFragment = SlidingTabFragment.getInstance(position);
             return mCurrentFragment;
         }

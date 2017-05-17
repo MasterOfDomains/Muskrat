@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -59,11 +58,18 @@ public abstract class Dao<T> {
     }
 
     public abstract ArrayList<T> executeQuery(String sql, @Nullable String[] argList);
+
     public abstract int insert(T t);
+
     public abstract boolean update(T t);
+
     public abstract void delete(int id);
+
     public abstract void deleteAll();
+
     public abstract T select(int id);
+
     public abstract ArrayList<T> selectAll();
+
     public abstract int getCount();
 }

@@ -7,9 +7,6 @@ import android.util.Log;
 
 import com.jsrwares.muskrat.media.models.AudioModel;
 
-/**
- * Created by Joe on 5/10/2016.
- */
 public class AudioRetriever extends Retriever {
 
     public AudioRetriever(ContentResolver cr) {

@@ -5,9 +5,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
-import java.io.File;
 import java.util.List;
 
 class Connector extends SQLiteOpenHelper {
@@ -22,6 +20,7 @@ class Connector extends SQLiteOpenHelper {
         mContext = context;
         this.mTableDefs = tableDefs;
     }
+
     public static Connector getInstance(Context context, String name,
                                         ConnectorTableDefinitions tableDefs) {
         if (mConnector == null) {
@@ -58,7 +57,7 @@ class Connector extends SQLiteOpenHelper {
 
         for (String table : tables) {
             sql = mContext.getString(R.string.drop_statement);
-            String arg[] = new String[] {table};
+            String arg[] = new String[]{table};
             executeUpdate(sql, arg);
         }
 

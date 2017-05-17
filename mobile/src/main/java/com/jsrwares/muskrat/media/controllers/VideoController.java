@@ -1,7 +1,6 @@
 package com.jsrwares.muskrat.media.controllers;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -16,13 +15,9 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.jsrwares.muskrat.R;
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/VideoController.java
-//=======
-import com.jsrwares.muskrat.media.MediaChooserActivity;
 import com.jsrwares.muskrat.media.MediaFunction;
 import com.jsrwares.muskrat.media.models.Model;
 import com.jsrwares.muskrat.media.models.VideoModel;
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/VideoController.java
 
 public class VideoController extends Controller {
 
@@ -41,86 +36,29 @@ public class VideoController extends Controller {
     private VideoView mVideoView;
     private MediaController mVideoControl;
 
-    private ProgressDialog mProgressDialog;
-//    private Uri mNowPlaying = null;
-
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/VideoController.java
-//    String mVidAddress = "android.resource://com.jsrwares.muskrat/" + R.raw.samplevid;
-////    String mVidAddress = "android.resource://com.jsrwares.muskrat/raw/samplevid";
-//
-//=======
     private boolean mTabIsActive = false;
     private Bundle mTabChangeBundle = null;
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/VideoController.java
     private int mVideoPosition = 0;
     private boolean mIsPrepared = false;
     private boolean mIsPreparing = false;
 
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/VideoController.java
-//    private boolean tabIsActive = false;
-//=======
     public VideoController() {
         mFunction = MediaFunction.VIDEO;
     }
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/VideoController.java
 
     private class PreparedListener implements MediaPlayer.OnPreparedListener {
 
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/VideoController.java
-//        @Override
-//        public void onPrepared(MediaPlayer mp) {
-//            progressDialog.dismiss();
-//            mIsPrepared = true;
-//            mIsPreparing = false;
-//            mVideoView.seekTo(mVideoPosition);
-//            mVideoView.start();
-//        }
-//    }
-//
-//    private void prepareVideo(String address) {
-//        mIsPrepared = false;
-//        mIsPreparing = true;
-//        progressDialog = new ProgressDialog(mFragment.getContext());
-//        progressDialog.setTitle("Joe's Sample Video");
-//        progressDialog.setMessage("Loading...");
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
-//
-//        mVideoView.setMediaController(mVideoControl);
-//        Uri vidUri = Uri.parse(mVidAddress);
-//=======
-//        mPlayerStub = (ViewStub) mStubContent.findViewById(PLAYER_STUB_ID);
-//        mPlayerStub.setLayoutResource(PLAYER_LAYOUT);
-//        mPlayerStubContent = inflater.inflate(PLAYER_LAYOUT, (ViewGroup) mParentLayout, true);
-//        mVideoModel = new VideoModel(mPlayerStubContent);
-//
-//        mVideoView = (VideoView) mPlayerStubContent.findViewById(R.id.videoPlayerView);
-//        mVideoControl = new MediaController(mFragment.getContext());
-//        mVideoControl.setAnchorView(mVideoView);
-//
-//        mVideoView.setMediaController(mVideoControl);
-//        mVideoView.setOnPreparedListener(this);
-//    }
-
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-//        mProgressDialog.dismiss();
-        mVideoView.seekTo(mVideoPosition);
-        mVideoView.start();
-    }}
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            mVideoView.seekTo(mVideoPosition);
+            mVideoView.start();
+        }
+    }
 
     private void prepareVideo(String address) {
-//        mProgressDialog = new mProgressDialog(mFragment.getContext());
-//        mProgressDialog.setTitle("Joe's Sample Video");
-//        mProgressDialog.setMessage("Loading...");
-//        mProgressDialog.setCancelable(false);
-//        mProgressDialog.show();
-
         if (address == null)
             address = "android.resource://com.jsrwares.muskrat/raw/samplevid";
-//            address = "android.resource://com.jsrwares.muskrat/" + R.raw.samplevid;
         Uri vidUri = Uri.parse(address);
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/VideoController.java
         mVideoView.setVideoURI(vidUri);
 
         mVideoView.requestFocus();
@@ -128,7 +66,6 @@ public class VideoController extends Controller {
     }
 
     @Override
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/VideoController.java
     protected void setupMedia(LayoutInflater inflater) {
         mStub.setLayoutResource(CHILD_LAYOUT);
         mStubContent = inflater.inflate(CHILD_LAYOUT, (ViewGroup) mParentLayout, true);
@@ -143,7 +80,6 @@ public class VideoController extends Controller {
         mVideoControl.setAnchorView(mVideoView);
     }
 
-//=======
     public void setAsVisible() {
         if (!mTabIsActive) {
             mTabIsActive = true;
@@ -155,21 +91,9 @@ public class VideoController extends Controller {
             }
         }
 
-//        if (mNowPlaying == null) {
-//            Intent intent = new Intent(mFragment.getActivity(), MediaChooserActivity.class);
-//            Bundle intentBundle = new Bundle();
-////            intentBundle.putInt(MediaChooserActivity.MEDIA_TYPE_KEY, MediaChooserActivity.VIDEO);
-//            intentBundle.putInt(MediaChooserActivity.MEDIA_TYPE_KEY, mMediaFunction.ordinal());
-//            intent.putExtras(intentBundle);
-//            mFragment.startActivityForResult(intent, PICK_VIDEO_FILE_REQUEST);
-//        }
-//        if (mNowPlaying == null) {
-//            startChooseMediaActivity(PICK_VIDEO_FILE_REQUEST);
-//        }
         mTabIsVisible = true;
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/VideoController.java
     }
-//
+
     @Override
     public void setAsBackground() {
         super.setAsBackground();
@@ -177,18 +101,15 @@ public class VideoController extends Controller {
         if (mTabIsActive) {
             mTabIsActive = false;
             mVideoView.pause();
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/VideoController.java
-//=======
             mTabChangeBundle = new Bundle();
             saveInstanceState(mTabChangeBundle);
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/VideoController.java
         }
         mVideoPosition = mVideoView.getCurrentPosition();
         mVideoView.setOnPreparedListener(null);
         mIsPrepared = false;
     }
 
-    @Override
+//    @Override
 //    public void setAsActive() {
 //        if (!tabIsActive) {
 //            tabIsActive = true;
@@ -196,37 +117,29 @@ public class VideoController extends Controller {
 //        }
 //    }
 
-//    @Override
+    @Override
     public void processActivityResult(int requestCode, int resultCode, Intent data) {
-//<<<<<<< Updated upstream:mobile/src/main/java/com/jsrwares/muskrat/mediacontrollers/VideoController.java
-//
-//=======
         if (requestCode == PICK_VIDEO_FILE_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 VideoModel.Item item = data.getParcelableExtra("Item");
                 if (item != null) {
-//                    Toast.makeText(mFragment.getContext(), item.toString(), Toast.LENGTH_LONG).show();
                     mNowPlaying = item;
                 }
-//                ArrayList<VideoModel.Item> items = data.getParcelableArrayListExtra("Items");
-//                Log.d("Joe", "Videos: " + items.size());
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
+            } else if (resultCode == Activity.RESULT_CANCELED) {
 
             }
         }
     }
 
-//    @Override
+    @Override
     public Model getModel() {
         return mVideoModel;
     }
 
-//    @Override
+    @Override
     public void chooseMedia() {
         if (mTabIsVisible)
             startChooseMediaActivity(PICK_VIDEO_FILE_REQUEST);
-//>>>>>>> Stashed changes:mobile/src/main/java/com/jsrwares/muskrat/media/controllers/VideoController.java
     }
 
     public void saveInstanceState(Bundle outState) {
@@ -235,7 +148,7 @@ public class VideoController extends Controller {
             outState.putInt(POSITION_KEY, position);
     }
 
-//    @Override
+    @Override
     public void restoreInstanceState(Bundle savedInstanceState) {
         mVideoPosition = savedInstanceState.getInt(POSITION_KEY);
     }
